@@ -5,7 +5,7 @@ import { z } from "zod";
 
 const PersonResult = z.object({
   name: z.string(),
-  eye_color: z.string();
+  eye_color: z.string()
 });
 
 export const fetchStarWarsPersonName = async (id: string) => {
