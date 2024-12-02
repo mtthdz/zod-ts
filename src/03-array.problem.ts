@@ -7,8 +7,9 @@ const StarWarsPerson = z.object({
   name: z.string(),
 });
 
-const StarWarsPeopleResults = z.unknown();
-//                            ^ 🕵️‍♂️
+const StarWarsPeopleResults = z.object({
+  results: z.array(StarWarsPerson),
+});
 
 export const fetchStarWarsPeople = async () => {
   const data = await fetch(
@@ -27,3 +28,10 @@ it("Should return the name", async () => {
     name: "Luke Skywalker",
   });
 });
+
+/**
+ * Notes
+ * 
+ * Similar to #2 but different API that returns arr of obj
+ * We can use `.array` to represent the arr
+ */
