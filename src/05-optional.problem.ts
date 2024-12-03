@@ -5,8 +5,7 @@ import { z } from "zod";
 
 const Form = z.object({
   name: z.string(),
-  phoneNumber: z.string(),
-  //                     ^ 🕵️‍♂️
+  phoneNumber: z.string().optional(),
 });
 
 export const validateFormInput = (values: unknown) => {
@@ -35,3 +34,10 @@ it("Should validate correct inputs", async () => {
 it("Should throw when you do not include the name", async () => {
   expect(() => validateFormInput({})).toThrowError("Required");
 });
+
+/**
+ * Notes
+ * Another usecase, validating form inputs
+ * The issue here is that the phoneNumber object key must be optional
+ * Luckily, zod provides `.optional` method
+ */

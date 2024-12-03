@@ -5,9 +5,14 @@ import { z } from "zod";
 
 const Form = z.object({
   repoName: z.string(),
-  privacyLevel: z.string(),
-  //              ^ 🕵️‍♂️
+  privacyLevel: z.union([
+    z.literal('private'),
+    z.literal('public')
+  ])
 });
+
+// .enum(['private', 'public'])
+type TForm = z.infer<typeof Form>;
 
 export const validateFormInput = (values: unknown) => {
   const parsedData = Form.parse(values);
@@ -15,7 +20,6 @@ export const validateFormInput = (values: unknown) => {
   return parsedData;
 };
 
-// TESTS
 
 it("Should fail if an invalid privacyLevel passed", async () => {
   expect(() =>
@@ -41,3 +45,10 @@ it("Should permit valid privacy levels", async () => {
     }).privacyLevel,
   ).toEqual("public");
 });
+
+/**
+ * Notes
+ * privacyLevel requires a union or enum in TS. We'll want to implement Zod for this.
+ * one solution is to use `.union` with `.literal` methods nested within
+ * `.enum` is a cleaner approach (line 14)
+ */
